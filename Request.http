@@ -29,3 +29,6 @@ content-type: application/json
   "gender": "male",
   "phones": ["478452","455268", 789546]
 }
+
+###
+DELETE http://localhost:8080/api/v1/clients/1
