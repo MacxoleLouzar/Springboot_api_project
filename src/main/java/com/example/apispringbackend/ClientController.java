@@ -30,4 +30,9 @@ public class ClientController {
     public Client getClientById(@PathVariable Integer id) {
         return clientService.getClientById(id);
     }
+
+    @PutMapping("{id}")
+    public void updateClient(@PathVariable Integer id, @RequestBody Client client) {
+        clientService.updateClient(client, id);
+    }
 }
