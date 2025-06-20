@@ -17,7 +17,7 @@ public class ClientController {
     }
 
     @GetMapping
-    public List<Client> getClient() {
+    public List<ClientDTO> getClient() {
         return clientService.getAllClients();
     }
 
@@ -27,7 +27,7 @@ public class ClientController {
     }
 
     @GetMapping("{id}")
-    public Client getClientById(@PathVariable Integer id) {
+    public ClientDTO getClientById(@PathVariable Integer id) {
         return clientService.getClientById(id);
     }
 

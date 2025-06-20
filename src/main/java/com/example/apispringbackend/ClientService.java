@@ -4,34 +4,40 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
-    public ClientService(ClientRepository clientRepository) {
+    private final ClientDTOMapper clientDTOMapper;
+    public ClientService(ClientRepository clientRepository, ClientDTOMapper clientDTOMapper) {
         this.clientRepository = clientRepository;
+        this.clientDTOMapper = clientDTOMapper;
     }
 
-    public  List<Client> getAllClients() {
-        return clientRepository.findAll();
+    public  List<ClientDTO> getAllClients() {
+        return clientRepository.findAll()
+                .stream()
+                .map(clientDTOMapper)
+                .collect(Collectors.toList());
     }
 
-    public Client getClientById(Integer id) {
-        return clientRepository.findById(id).orElseThrow(() -> new  IllegalStateException(
+    public ClientDTO getClientById(Integer id) {
+        return clientRepository.findById(id)
+                .map(clientDTOMapper)
+                .orElseThrow(() -> new  IllegalStateException(
                 id + "Not Found"));
     }
 
-    public Client addClient(Client client) {
-        return clientRepository.save(client);
+    public void addClient(Client client) {
+         clientRepository.save(client);
     }
 
-    public Client updateClient(Client client, Integer id) {
-        Optional<Client> existingClient = clientRepository.findById(id);
+    public void updateClient(Client client, Integer id) {
+        Optional<ClientDTO> existingClient = clientRepository.findById(id).map(clientDTOMapper);
         if (existingClient.isPresent()) {
             client.setId(id); // Make sure the update targets the correct ID
-            return clientRepository.save(client);
-        } else {
-            return null;
+             clientRepository.save(client);
         }
     }
 

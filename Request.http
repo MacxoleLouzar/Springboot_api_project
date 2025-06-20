@@ -14,7 +14,7 @@ Content-Type: application/json
   "age": 25,
   "address": "Germiston 5874",
   "gender": "Female",
-  "phones": ["478452","455268", 789546]
+  "phones": ["478452","455268"]
 }
 
 ###
